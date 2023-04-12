@@ -49,6 +49,7 @@ npm run dev
 To run this project, you will need to add the following environment variables to your .env
 
 `URL_BASE`=url_de_webcrapping
+
 `URL_CAT`=endpoint_categorias
 
 🌟 Ready to use!
