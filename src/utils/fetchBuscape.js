@@ -1,7 +1,6 @@
 require('dotenv/config');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const fs = require('fs/promises');
 
 const urlBase = process.env.URL_BASE;
 const urlBaseSearch = process.env.URL_BASESEARCH;
@@ -52,17 +51,12 @@ const fetchData = async (q = '', cat) => {
         return obj;
       });
 
-    const resultFinal = await Promise.all(
+    return Promise.all(
       result.map(async (el) => {
         if (el.srcImg) return el;
         el.srcImg = await getImage(el.link);
         return el;
       })
-    );
-
-    await fs.writeFile(
-      './src/database/productsTv.json',
-      JSON.stringify(resultFinal, null, 2)
     );
   } catch (error) {
     console.log('Error fetchData utils!');
