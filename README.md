@@ -65,6 +65,7 @@ To run this project, you will need to add the following environment variables to
 - [javascript](https://www.w3schools.com/js/js_es6.asp): Language
 - [Nodejs](https://nodejs.org/en): Engine
 - [Express](https://expressjs.com/): Framework api
+- [Cheerio](https://cheerio.js.org/): Web scraping
 - [Mongo DB Atlas](https://www.mongodb.com/atlas/database): Data base
 
 <hr>
