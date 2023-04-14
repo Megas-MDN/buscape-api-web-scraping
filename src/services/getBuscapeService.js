@@ -8,8 +8,8 @@ const urlBase = process.env.URL_BASE;
 const urlBaseSearch = process.env.URL_BASESEARCH;
 const urlCat = process.env.URL_CAT;
 const TV = 3;
-const GELADEIRA = 8;
 const CELULAR = 7;
+const GELADEIRA = 8;
 
 const getByCatTv = async (q = '') => {
   try {
@@ -21,6 +21,22 @@ const getByCatTv = async (q = '') => {
   }
 };
 
+const getAll = async (q = '') => {
+  try {
+    const [arrTv, arrCel, arrGela] = await Promise.all([
+      fetchData(q, 3),
+      fetchData(q, 7),
+      fetchData(q, 8),
+    ]);
+
+    return [...arrTv, ...arrCel, ...arrGela];
+  } catch (error) {
+    console.log('Error getAll Service');
+    throw error;
+  }
+};
+
 module.exports = {
   getByCatTv,
+  getAll,
 };

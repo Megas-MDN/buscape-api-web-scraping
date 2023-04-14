@@ -45,9 +45,18 @@ const fetchData = async (q = '', cat) => {
           .text()
           .split('" decoding="async" ')[0]
           .split('src="')[1];
-        obj.desc = $(el)
+        [obj.desc, obj.price] = $(el)
           .find('.SearchCard_ProductCard_Description__fGXI3')
-          .text();
+          .text()
+          .split('R$');
+        obj.desc = obj.desc.split('Menor ').join(' Menor ');
+        const price = obj.price
+          .trim()
+          .split('até')[0]
+          .replace('.', '')
+          .replace(',', '.');
+        obj.price = parseFloat(price);
+        obj.source = 'buscape';
         return obj;
       });
 
@@ -63,7 +72,7 @@ const fetchData = async (q = '', cat) => {
     throw error;
   }
 };
-
-// fetchy('xiaomi', 7);
+// console.clear();
+// fetchData('xiaomi', 7).then((r) => console.log(r));
 
 module.exports = fetchData;

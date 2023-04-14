@@ -1,5 +1,7 @@
 # API buscape Web scraping
 
+This API provides a web scraping solution to obtain product data from the Buscapé website. With the API, it is possible to extract information such as product name, price, description, and image by searching for a specific term.
+
 <hr>
 
 ## Application flow
