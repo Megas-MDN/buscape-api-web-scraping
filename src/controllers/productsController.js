@@ -36,7 +36,12 @@ const search = async (req, res, next) => {
       return res.status(200).send(sortArr(await serviceML.getByCat(q, cat)));
     if (web === 'buscape')
       return res.status(200).send(sortArr(await serviceBscp.getByCat(q, cat)));
-    return getAll(req, res, next);
+
+    const [arrBuscape, arrML] = await Promise.all([
+      serviceBscp.getByCat(q, cat),
+      serviceML.getByCat(q, cat),
+    ]);
+    return res.status(200).send(sortArr([...arrBuscape, ...arrML]));
   } catch (error) {
     console.log('Error no search controller');
     next({ message: error.message });
