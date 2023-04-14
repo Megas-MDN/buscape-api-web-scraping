@@ -4,16 +4,19 @@ const cheerio = require('cheerio');
 const fs = require('fs/promises');
 const fetchData = require('../utils/fetchBuscape');
 
-const urlBase = process.env.URL_BASE;
-const urlBaseSearch = process.env.URL_BASESEARCH;
-const urlCat = process.env.URL_CAT;
 const TV = 3;
 const CELULAR = 7;
 const GELADEIRA = 8;
 
+const idsCat = {
+  tv: TV,
+  celular: CELULAR,
+  geladeira: GELADEIRA,
+};
+
 const getByCatTv = async (q = '') => {
   try {
-    const response = await fetchData(q, 3);
+    const response = await fetchData(q, idsCat.tv);
     return response;
   } catch (error) {
     console.log('Error service getByCatTv');
@@ -24,9 +27,9 @@ const getByCatTv = async (q = '') => {
 const getAll = async (q = '') => {
   try {
     const [arrTv, arrCel, arrGela] = await Promise.all([
-      fetchData(q, 3),
-      fetchData(q, 7),
-      fetchData(q, 8),
+      fetchData(q, idsCat.tv),
+      fetchData(q, idsCat.celular),
+      fetchData(q, idsCat.geladeira),
     ]);
 
     return [...arrTv, ...arrCel, ...arrGela];
@@ -36,7 +39,18 @@ const getAll = async (q = '') => {
   }
 };
 
+const getByCat = async (q = '', cat) => {
+  try {
+    if (!(cat in idsCat)) return getAll(q);
+    return fetchData(q, idsCat[cat]);
+  } catch (error) {
+    console.log('Error getByCat Service');
+    throw error;
+  }
+};
+
 module.exports = {
   getByCatTv,
   getAll,
+  getByCat,
 };

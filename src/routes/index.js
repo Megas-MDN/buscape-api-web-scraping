@@ -7,7 +7,7 @@ const router = Router();
 router.get('/', productsController.getAll);
 
 router.get('/buscape/tv', productsController.getByCategoryTV);
-// router.get('/buscape/geladeira', productsController);
+router.get('/search', productsController.search);
 // router.get('/buscape/celular', productsController);
 
 router.use(notImplemented);

@@ -29,7 +29,22 @@ const getAll = async (req, res, next) => {
   }
 };
 
+const search = async (req, res, next) => {
+  const { q, cat, web } = req.query;
+  try {
+    if (web === 'mercado_livre')
+      return res.status(200).send(sortArr(await serviceML.getByCat(q, cat)));
+    if (web === 'buscape')
+      return res.status(200).send(sortArr(await serviceBscp.getByCat(q, cat)));
+    return getAll(req, res, next);
+  } catch (error) {
+    console.log('Error no search controller');
+    next({ message: error.message });
+  }
+};
+
 module.exports = {
   getAll,
   getByCategoryTV,
+  search,
 };
