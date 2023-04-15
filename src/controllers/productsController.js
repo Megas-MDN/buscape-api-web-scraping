@@ -3,18 +3,6 @@ const serviceML = require('../services/getMLService');
 const sortArr = require('../utils/sortArr');
 const Search = require('../models/Search');
 
-const getByCategoryTV = async (req, res, next) => {
-  const { q } = req.query;
-  try {
-    const response = await serviceBscp.getByCatTv(q);
-    if (response) return res.status(200).send(response);
-    return next({ status: 404, message: 'Products not found!' });
-  } catch (error) {
-    console.log('Error controller getByCategoryTV');
-    return next({ message: error.message });
-  }
-};
-
 const getAll = async (req, res, next) => {
   const { q } = req.query;
   try {
@@ -42,9 +30,11 @@ const goSearch = async (q = '', cat = '', web = '') => {
 };
 
 const search = async (req, res, next) => {
-  const { q, cat, web } = req.query;
+  const { q: qry, cat, web } = req.query;
   const { authorization } = req.headers;
-
+  const q = qry
+    ? qry.normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
+    : '';
   try {
     const data = await Search.findOne({ search: `0${q}${cat}${web}` });
     if (data) {
@@ -72,6 +62,5 @@ const search = async (req, res, next) => {
 
 module.exports = {
   getAll,
-  getByCategoryTV,
   search,
 };

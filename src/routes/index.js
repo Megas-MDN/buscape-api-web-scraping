@@ -5,10 +5,11 @@ const productsController = require('../controllers/productsController');
 
 const router = Router();
 router.get('/', productsController.getAll);
+router.get('/test', (req, res) =>
+  res.status(200).send({ message: 'Test ok!' })
+);
 
-router.get('/buscape/tv', productsController.getByCategoryTV);
 router.get('/search', productsController.search);
-// router.get('/buscape/celular', productsController);
 
 router.use(notImplemented);
 router.use(errorHandler);

@@ -1,7 +1,7 @@
 require('dotenv/config');
 const axios = require('axios');
 
-const URL_BASE = process.env.URL_ML; //https://api.mercadolibre.com/sites/MLB/search?limit=48&q= &category=
+const URL_BASE = process.env.URL_ML;
 
 const CELULAR = 'MLB1055';
 const TV = 'MLB1002';

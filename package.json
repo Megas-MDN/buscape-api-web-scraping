@@ -4,8 +4,9 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "mocha tests/**/*.test.js --exit"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,10 @@
     "mongoose": "^7.0.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "chai": "4.3.4",
+    "chai-http": "4.3.0",
+    "mocha": "8.4.0",
+    "nodemon": "^2.0.22",
+    "sinon": "11.1.1"
   }
 }

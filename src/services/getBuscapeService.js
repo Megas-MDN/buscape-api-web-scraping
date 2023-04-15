@@ -1,7 +1,3 @@
-require('dotenv/config');
-const axios = require('axios');
-const cheerio = require('cheerio');
-const fs = require('fs/promises');
 const fetchData = require('../utils/fetchBuscape');
 
 const TV = 3;
@@ -12,16 +8,6 @@ const idsCat = {
   tv: TV,
   celular: CELULAR,
   geladeira: GELADEIRA,
-};
-
-const getByCatTv = async (q = '') => {
-  try {
-    const response = await fetchData(q, idsCat.tv);
-    return response;
-  } catch (error) {
-    console.log('Error service getByCatTv');
-    throw error;
-  }
 };
 
 const getAll = async (q = '') => {
@@ -50,7 +36,6 @@ const getByCat = async (q = '', cat) => {
 };
 
 module.exports = {
-  getByCatTv,
   getAll,
   getByCat,
 };

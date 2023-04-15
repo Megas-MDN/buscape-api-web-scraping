@@ -25,7 +25,7 @@ const getImage = async (url) => {
     return $imgs[0];
   } catch (error) {
     console.log('Error getImages utils!');
-    throw error;
+    return 'https://via.placeholder.com/150x150?text=Image+not+Found';
   }
 };
 
