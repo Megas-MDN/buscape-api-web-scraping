@@ -88,7 +88,7 @@ describe('Testing the controller layer', function () {
       });
     });
 
-    it('Testing the product search from web', async function () {
+    it('Testing product search failure on the web', async function () {
       const saveSpy = sinon.stub(Search.prototype, 'save');
       const searchStub = sinon.stub();
       searchStub.returns({ save: saveSpy });

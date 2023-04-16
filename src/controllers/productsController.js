@@ -38,6 +38,7 @@ const search = async (req, res, next) => {
   const q = qry
     ? qry.normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
     : '';
+
   try {
     const data = await Search.findOne({ search: `0${q}${cat}${web}` });
     if (data) {
