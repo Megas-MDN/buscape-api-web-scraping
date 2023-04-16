@@ -106,10 +106,6 @@ To run this project, you will need to add the following environment variables to
 
 <hr>
 
-## 💻 Deploy
-
-<hr>
-
 ## 💻 Built with:
 
 - [javascript](https://www.w3schools.com/js/js_es6.asp) : Language
