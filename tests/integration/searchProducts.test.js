@@ -22,8 +22,9 @@ describe('Integration test, search products', function () {
         .get('/search?q=&cat=&web=mercado_livre');
 
       expect(response.status).to.be.equal(200);
-      expect(response.body.length).to.greaterThan(0);
-      const onlyMl = response.body.every(
+      expect(response.body).haveOwnProperty('source');
+      expect(response.body.results.length).to.greaterThan(0);
+      const onlyMl = response.body.results.every(
         ({ source }) => source === 'mercado_livre'
       );
       expect(onlyMl).to.be.equal(true);
@@ -35,8 +36,11 @@ describe('Integration test, search products', function () {
         .get('/search?q=&cat=&web=buscape');
 
       expect(response.status).to.be.equal(200);
-      expect(response.body.length).to.greaterThan(0);
-      const onlyMl = response.body.every(({ source }) => source === 'buscape');
+      expect(response.body).haveOwnProperty('source');
+      expect(response.body.results.length).to.greaterThan(0);
+      const onlyMl = response.body.results.every(
+        ({ source }) => source === 'buscape'
+      );
       expect(onlyMl).to.be.equal(true);
     }).timeout(100000);
 
@@ -44,8 +48,11 @@ describe('Integration test, search products', function () {
       const response = await chai.request(app).get('/search?q=&cat=tv&web=');
 
       expect(response.status).to.be.equal(200);
-
-      const [yesIncludes, notIncludes] = yesNotIncludes(['tv'], response.body);
+      expect(response.body).haveOwnProperty('source');
+      const [yesIncludes, notIncludes] = yesNotIncludes(
+        ['tv'],
+        response.body.results
+      );
 
       expect(yesIncludes).to.greaterThan(notIncludes);
     }).timeout(100000);
@@ -56,7 +63,7 @@ describe('Integration test, search products', function () {
         .get('/search?q=&cat=celular&web=');
 
       expect(response.status).to.be.equal(200);
-
+      expect(response.body).haveOwnProperty('source');
       const [yesIncludes, notIncludes] = yesNotIncludes(
         [
           'phone',
@@ -68,7 +75,7 @@ describe('Integration test, search products', function () {
           'lg',
           'l8star',
         ],
-        response.body
+        response.body.results
       );
 
       expect(yesIncludes).to.greaterThan(notIncludes);
@@ -80,7 +87,7 @@ describe('Integration test, search products', function () {
         .get('/search?q=&cat=geladeira&web=');
 
       expect(response.status).to.be.equal(200);
-
+      expect(response.body).haveOwnProperty('source');
       const [yesIncludes, notIncludes] = yesNotIncludes(
         [
           'geladeira',
@@ -92,7 +99,7 @@ describe('Integration test, search products', function () {
           'duplex',
           'brastemp',
         ],
-        response.body
+        response.body.results
       );
 
       expect(yesIncludes).to.greaterThan(notIncludes);
@@ -104,17 +111,19 @@ describe('Integration test, search products', function () {
         .get('/search?q=/^iphone*!<>/&cat=&web=');
 
       expect(response.status).to.be.equal(200);
-
+      expect(response.body).haveOwnProperty('source');
       const [yesIncludes, notIncludes] = yesNotIncludes(
         ['iphone'],
-        response.body
+        response.body.results
       );
 
       expect(yesIncludes).to.greaterThan(notIncludes);
-      const onlyMl = response.body.some(
+      const onlyMl = response.body.results.some(
         ({ source }) => source === 'mercado_livre'
       );
-      const onlyBscp = response.body.some(({ source }) => source === 'buscape');
+      const onlyBscp = response.body.results.some(
+        ({ source }) => source === 'buscape'
+      );
       expect(onlyMl).to.be.equal(true);
       expect(onlyBscp).to.be.equal(true);
     }).timeout(100000);

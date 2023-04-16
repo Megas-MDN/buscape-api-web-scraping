@@ -11,7 +11,10 @@ const getAll = async (req, res, next) => {
       serviceML.getAll(q),
     ]);
 
-    return res.status(200).send(sortArr([...arrBuscape, ...arrML]));
+    return res.status(200).send({
+      source: 'web',
+      results: sortArr([...arrBuscape, ...arrML]),
+    });
   } catch (error) {
     console.log('Error controller getAll');
     return next({ message: error.message });
@@ -40,20 +43,20 @@ const search = async (req, res, next) => {
     if (data) {
       console.log('Retrieving search from database');
       const dados = JSON.parse(data.content);
-      return res.status(200).send(dados);
+      return res.status(200).send({ source: 'database', results: dados });
     }
 
     console.log('New search saved in the database');
-    const result = await goSearch(q, cat, web);
+    const results = await goSearch(q, cat, web);
     if (authorization === process.env.HASH_ATT) {
       const newData = new Search({
         search: `0${q}${cat}${web}`,
-        content: JSON.stringify(result),
+        content: JSON.stringify(results),
       });
 
       await newData.save();
     }
-    return res.status(200).send(result);
+    return res.status(200).send({ source: 'web', results });
   } catch (error) {
     console.log('Error no search controller', error);
     next({ message: error.message });
