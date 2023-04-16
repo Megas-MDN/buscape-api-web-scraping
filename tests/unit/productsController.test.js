@@ -16,7 +16,7 @@ const res = {};
 const req = {};
 const next = (params) => params;
 
-describe.only('Testing the controller layer', function () {
+describe('Testing the controller layer', function () {
   describe('Unit test with service layer simulation', function () {
     beforeEach(function () {
       res.status = sinon.stub().returns(res);
