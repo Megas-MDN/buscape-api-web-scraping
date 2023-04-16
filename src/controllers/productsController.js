@@ -58,8 +58,8 @@ const search = async (req, res, next) => {
     }
     return res.status(200).send({ source: 'web', results });
   } catch (error) {
-    console.log('Error no search controller', error);
-    next({ message: error.message });
+    console.log('Error search controller');
+    return next({ message: error.message });
   }
 };
 
