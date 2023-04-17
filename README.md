@@ -84,17 +84,7 @@ To run this project, you will need to add the following environment variables to
 
 `URL_BASESEARCH`= Base URL for searching in Buscapé web scraping database
 
-`URL_CAT`= Base URL for categories in Mercado Livre
-
 `URL_ML`= Base URL for Mercado Livre search
-
-`URL_ML_CAT`= Base URL for searching categories in Mercado Livre
-
-`CAT_ML_CEL`= ID for the cell phone category
-
-`CAT_ML_GELADEIRA`= ID for the refrigerator category
-
-`CAT_ML_TV`= ID for the television category
 
 `PASS_DB`= Database password
 
