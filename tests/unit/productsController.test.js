@@ -41,7 +41,9 @@ describe('Testing the controller layer', function () {
     it('Testing to get all products from datebase', async function () {
       req.query = { q: '' };
 
-      sinon.stub(Search, 'findOne').resolves({ content: getAll.results });
+      sinon
+        .stub(Search, 'findOne')
+        .resolves({ content: JSON.stringify(getAll.results) });
       sinon
         .stub(serviceML, 'getAll')
         .throws(new Error("Don't should start web scraping!"));

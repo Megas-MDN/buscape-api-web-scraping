@@ -10,7 +10,7 @@ const getAll = async (req, res, next) => {
     if (dataStorage)
       return res.status(200).send({
         source: 'database',
-        results: dataStorage.content,
+        results: JSON.parse(dataStorage.content),
       });
     const [arrBuscape, arrML] = await Promise.all([
       serviceBscp.getAll(q),
