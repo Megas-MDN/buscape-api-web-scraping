@@ -12,7 +12,7 @@ describe('Integration test, getting all products', function () {
       const response = await chai.request(app).get('/');
 
       expect(response.status).to.be.equal(200);
-      expect(response.body.source).to.be.equal('web');
+      expect(response.body).to.haveOwnProperty('source');
       expect(response.body.results.length).to.greaterThan(200);
     }).timeout(100000);
   });

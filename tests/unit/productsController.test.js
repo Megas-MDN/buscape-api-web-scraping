@@ -8,7 +8,7 @@ const { getAll, mockML, mockBscp } = require('./mocks/data');
 const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
-const { expect, assert } = require('chai');
+const { expect } = require('chai');
 
 chai.use(sinonChai);
 
@@ -23,9 +23,10 @@ describe('Testing the controller layer', function () {
       res.send = (params) => params;
     });
 
-    it('Testing to get all products', async function () {
+    it('Testing to get all products from web', async function () {
       req.query = { q: '' };
 
+      sinon.stub(Search, 'findOne').resolves(false);
       sinon.stub(serviceML, 'getAll').resolves(mockML);
       sinon.stub(serviceBscp, 'getAll').resolves(mockBscp);
 
@@ -37,8 +38,29 @@ describe('Testing the controller layer', function () {
       });
     });
 
+    it('Testing to get all products from datebase', async function () {
+      req.query = { q: '' };
+
+      sinon.stub(Search, 'findOne').resolves({ content: getAll.results });
+      sinon
+        .stub(serviceML, 'getAll')
+        .throws(new Error("Don't should start web scraping!"));
+      sinon
+        .stub(serviceBscp, 'getAll')
+        .resolves(new Error("Don't should start web scraping!"));
+
+      const result = await productsController.getAll(req, res, next);
+
+      expect(res.status).to.have.been.calledWith(200);
+      getAll.results.forEach((prod) => {
+        expect(result.results).to.deep.include(prod);
+      });
+    });
+
     it('Testing fail to get all products', async function () {
       req.query = { q: '' };
+
+      sinon.stub(Search, 'findOne').resolves(undefined);
 
       sinon
         .stub(serviceML, 'getAll')
