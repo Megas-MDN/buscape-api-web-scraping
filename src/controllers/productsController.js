@@ -6,6 +6,12 @@ const Search = require('../models/Search');
 const getAll = async (req, res, next) => {
   const { q } = req.query;
   try {
+    const dataStorage = Search.findOne({ search: `0` });
+    if (dataStorage)
+      return res.status(200).send({
+        source: 'database',
+        results: dataStorage,
+      });
     const [arrBuscape, arrML] = await Promise.all([
       serviceBscp.getAll(q),
       serviceML.getAll(q),
