@@ -1,5 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+require('../../src/database/connection')();
 const app = require('../../src/index.js');
 
 const { expect } = chai;
